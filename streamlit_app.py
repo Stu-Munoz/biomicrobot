@@ -59,7 +59,7 @@ pd.set_option('display.max_colwidth', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
-genai.configure(api_key=api_key_)
+genai.configure(api_key=st.secrets["api_key_"])
 model_nlp = genai.GenerativeModel('models/gemini-2.0-flash') 
 #models/gemini-2.5-flash-preview-04-17
 #models/gemini-2.0-flash       
