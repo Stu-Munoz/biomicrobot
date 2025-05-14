@@ -60,7 +60,11 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 
 genai.configure(api_key='AIzaSyAyqAdDi1utTQRZQuzbeqVjy6V8BbUzihk')
-model_nlp = genai.GenerativeModel('models/gemini-2.5-pro-exp-03-25') #models/gemini-1.5-flash       models/gemini-2.5-pro-exp-03-25
+model_nlp = genai.GenerativeModel('models/gemini-2.0-flash') 
+#models/gemini-2.5-flash-preview-04-17
+#models/gemini-2.0-flash       
+#models/gemini-2.5-pro-exp-03-25
+
 
 st.set_page_config(page_title="Biomicrobot", page_icon=":space_invader:", layout="wide") #robot_face
 
@@ -81,7 +85,10 @@ if idioma == "Español":
         Cuando sea necesario, utiliza viñetas para enumerar la información relevante.\
         Si el pasaje no es relevante para la respuesta, puedes ignorarlo.\
         Descompón los conceptos complicados.\
+        Si la respuesta no se encuentra explícitamente en los textos, infiere la mejor respuesta posible utilizando tu conocimiento experto.\
         """
+    #model = st.selectbox("Selecciona el modelo", ["Pregunta/Respuesta", "Clasificación", "Extracción Entidades"])
+
 
 elif idioma == "English":
     file = 'data_embeddings_en.xlsx'
@@ -92,8 +99,14 @@ elif idioma == "English":
     When necessary use bullet points to list the relevant information. \
     If the passage is irrelevant to the answer, you may ignore it. \
     Break down complicated concepts. \
+    If the answer is not explicitly found in the texts, infer the best possible answer using your expert knowledge.\
         """
+    ms_cls = 'Write down the text to classify. The classes are MICROFLUIDICS, SENSORS, MEASUREMENT TECHNIQUES, NANOCOMPOSITES AND NANOSTRUCTURATION | CHEMICAL AND PHYSICAL PROCESSES, ELECTRONICS | PROGRAMMING AND SW DEVELOPMENT'
+    #model = st.selectbox("Select the model", ["Question/Answer", "Classification", "Entities Extraction"])
 
+        
+
+#if model == "Pregunta/Respuesta" or model == "Question/Answer":#, "Clasificación", "Extracción Entidades"
 df = read_db(file)
 
 # Descripción
@@ -119,8 +132,11 @@ if user_input:
         answer = model_nlp.generate_content(prompt)
 
         response = f"**Biomicrobot:** {answer.text}"
-        st.markdown(response)
+        st.markdown(response)        
         
-    # Botón de reset
-    if st.button("Clean chat"):
-        st.rerun()
+#elif model == "Clasificación" or model == "Classification":#, "Clasificación", "Extracción Entidades"
+    #st.markdown('Clasificacion')
+
+
+if st.button("Clean chat"):
+    st.rerun()
